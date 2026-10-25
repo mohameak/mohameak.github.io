@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aboul-Karim Mohamed El Maarouf, ingénieur de recherche HPC</title>
+<meta name="description" content="Aboul-Karim Mohamed El Maarouf, ingénieur de recherche en calcul haute performance à IFP Energies nouvelles : solveurs linéaires creux, parallélisme à grain fin, simulation d'écoulements en milieu poreux.">
+<meta property="og:title" content="Aboul-Karim Mohamed El Maarouf, ingénieur de recherche HPC">
+<meta property="og:description" content="Solveurs linéaires creux, parallélisme à grain fin et simulation d'écoulements en milieu poreux à IFP Energies nouvelles.">
+<meta property="og:type" content="profile">
+<meta property="og:image" content="https://mohameak.github.io/photo.jpg">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='4' fill='%230B5C8C'/%3E%3Ctext x='8' y='11.5' font-family='Arial' font-size='8' font-weight='700' fill='white' text-anchor='middle'%3EAK%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="en" href="https://mohameak.github.io/">
+<link rel="alternate" hreflang="fr" href="https://mohameak.github.io/fr/">
+<link rel="canonical" href="https://mohameak.github.io/fr/">
+<link rel="alternate" hreflang="x-default" href="https://mohameak.github.io/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --side: #F5F6F7;
+    --ink: #16181D;
+    --muted: #5F6670;
+    --faint: #8A919B;
+    --rule: #E5E7EA;
+    --accent: #0B5C8C;
+    --accent-soft: #E6F0F6;
+    --c1: #2F62B4;
+    --c2: #23887C;
+    --c3: #C98A12;
+    --c4: #B0466F;
+    --grid: #E7EBF0;
+    --font: "Geist", "Helvetica Neue", Arial, sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14171B;
+      --side: #1A1E23;
+      --ink: #E8EBEF;
+      --muted: #A3ABB5;
+      --faint: #7C8591;
+      --rule: #2A3038;
+      --accent: #6FB3DE;
+      --accent-soft: #1C2E3B;
+      --c1: #6E9BE6;
+      --c2: #4FC0B1;
+      --c3: #E8B54E;
+      --c4: #DD7FA3;
+      --grid: #262D36;
+      color-scheme: dark;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 20rem minmax(0, 1fr);
+    min-height: 100vh;
+    max-width: 160rem;
+    margin: 0 auto;
+    background: var(--bg);
+  }
+  /* Écrans très larges : la colonne grise se prolonge jusqu'au bord gauche */
+  @media (min-width: 140rem) { html { font-size: 18px; } }
+  @media (min-width: 160rem) {
+    body { background: linear-gradient(to right, var(--side) 50%, var(--bg) 50%); }
+  }
+
+  /* ---------- Sidebar ---------- */
+  .side {
+    background: var(--side);
+    border-right: 1px solid var(--rule);
+  }
+  .side-inner {
+    padding: 3rem 2rem 2.5rem;
+  }
+  .portrait {
+    display: block;
+    width: 8.5rem;
+    height: auto;
+    aspect-ratio: 19 / 20;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+  }
+  .side h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem;
+  }
+  .side .role { margin: 0 0 0.25rem; font-weight: 500; }
+  .side .org { margin: 0 0 1.75rem; color: var(--muted); font-size: 0.95rem; }
+
+  .side h2 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--faint);
+    margin: 2rem 0 0.75rem;
+  }
+  .contact { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; font-size: 0.95rem; }
+  .contact a { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--ink); }
+  .contact a:hover { color: var(--accent); text-decoration: none; }
+  .contact svg { width: 1rem; height: 1rem; fill: var(--muted); flex: none; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+  .tags li, .tags a {
+    font-size: 0.82rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    color: var(--muted);
+  }
+  .tags.linked li { padding: 0; border: 0; background: none; }
+  .tags a { display: inline-block; }
+  .tags a:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+  .tags a[aria-current="true"] { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
+
+  .lang { display: flex; gap: 0.35rem; margin: 0 0 1.5rem; }
+  .lang a {
+    font-size: 0.8rem; font-weight: 500;
+    padding: 0.15rem 0.6rem;
+    border: 1px solid var(--rule); border-radius: 999px;
+    color: var(--muted);
+  }
+  .lang a:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+  .lang a[aria-current="page"] { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
+
+  /* Matrice */
+  .matrix-fig {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: 1.25rem 1.5rem;
+    align-items: center;
+    align-self: start;
+    margin: 0;
+    padding: 1.25rem;
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+  }
+  .matrix-fig svg { display: block; width: 100%; height: auto; }
+  .matrix-fig rect.nz { transition: transform 900ms cubic-bezier(.65,0,.35,1); }
+  .matrix-fig figcaption { font-size: 0.9rem; color: var(--muted); }
+  .matrix-fig figcaption p { margin: 0 0 0.9rem; }
+  .matrix-toggle {
+    font: inherit; font-size: 0.85rem; font-weight: 500;
+    color: var(--ink); background: transparent;
+    border: 1px solid var(--rule); border-radius: 999px;
+    padding: 0.3rem 0.85rem; cursor: pointer;
+  }
+  .matrix-toggle:hover { border-color: var(--faint); }
+  @media (prefers-reduced-motion: reduce) { .matrix-fig rect.nz { transition: none; } }
+
+  .domain-note {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem;
+    font-size: 0.9rem; color: var(--muted);
+    margin: 0 0 0.5rem;
+  }
+  .domain-note[hidden] { display: none; }
+  .domain-note strong { color: var(--ink); font-weight: 500; }
+  .link-btn { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; }
+  .link-btn:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+  .side-list { list-style: none; margin: 0; padding: 0; font-size: 0.93rem; color: var(--muted); display: grid; gap: 0.35rem; }
+  .side-list strong { color: var(--ink); font-weight: 500; }
+
+  .pdf-btn {
+    margin-top: 2.25rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font: inherit; font-size: 0.9rem; font-weight: 500;
+    color: var(--bg); background: var(--ink);
+    border: 0; border-radius: 8px;
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+  }
+  .pdf-btn svg { width: 1rem; height: 1rem; fill: currentColor; }
+  .pdf-btn:hover { opacity: 0.88; }
+
+  /* ---------- Main ---------- */
+  .main {
+    padding: 3rem clamp(1rem, 4vw, 4.5rem) 4rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 3.75rem;
+    align-content: start;
+  }
+  .profile-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem 3rem; }
+  .profile-text > :last-child { margin-bottom: 0; }
+
+  /* Écran large : texte du profil et matrice côte à côte */
+  @media (min-width: 75rem) {
+    .profile-body { grid-template-columns: minmax(0, 1fr) 17rem; }
+    .matrix-fig { grid-template-columns: 1fr; }
+  }
+  /* Très large : deux colonnes de contenu, publications à droite */
+  @media (min-width: 100rem) {
+    .main {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-areas:
+        "profil profil"
+        "exp pub"
+        "form pub"
+        "foot pub";
+      grid-template-rows: auto auto auto 1fr;
+      column-gap: clamp(3rem, 4vw, 5rem);
+    }
+    .s-profil { grid-area: profil; }
+    .s-exp { grid-area: exp; }
+    .s-pub { grid-area: pub; }
+    .s-form { grid-area: form; }
+    .main > footer { grid-area: foot; align-self: end; }
+    .profile-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: clamp(3rem, 4vw, 5rem); }
+    .matrix-fig { grid-template-columns: 15rem minmax(0, 1fr); }
+  }
+  .main h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.25rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .profile p { margin: 0 0 0.9rem; }
+  .profile ul { margin: 0 0 0.9rem; padding-left: 1.15rem; }
+  .profile li { margin: 0.35rem 0; }
+  .profile li::marker { color: var(--accent); }
+
+  .entries { list-style: none; margin: 0; padding: 0; }
+  .entry {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 0 1.5rem;
+    padding: 1rem 0;
+  }
+  .entry + .entry { border-top: 1px solid var(--rule); }
+  .when { color: var(--faint); font-size: 0.9rem; font-variant-numeric: tabular-nums; padding-top: 0.1rem; }
+  .entry h3 { font-size: 1.02rem; font-weight: 600; line-height: 1.4; margin: 0; }
+  .entry .where { color: var(--muted); margin: 0.1rem 0 0.4rem; }
+  .entry p { margin: 0.3rem 0; }
+  .entry ul { margin: 0.35rem 0 0; padding-left: 1.1rem; }
+  .entry li { margin: 0.25rem 0; }
+  .entry li::marker { color: var(--faint); }
+
+  /* Publications */
+  .filters { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: -0.25rem 0 0.75rem; }
+  .filters button {
+    font: inherit; font-size: 0.85rem; font-weight: 500;
+    color: var(--muted); background: transparent;
+    border: 1px solid var(--rule); border-radius: 999px;
+    padding: 0.28rem 0.8rem; cursor: pointer;
+  }
+  .filters button:hover { color: var(--ink); border-color: var(--faint); }
+  .filters button[aria-pressed="true"] { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
+  .filters .n { color: var(--faint); margin-left: 0.2rem; font-variant-numeric: tabular-nums; }
+
+  .pub .kind { font-size: 0.82rem; color: var(--accent); font-weight: 500; margin-bottom: 0.15rem; }
+  .pub .authors { color: var(--muted); font-size: 0.93rem; margin: 0.25rem 0 0.1rem; }
+  .pub .authors strong { color: var(--ink); font-weight: 500; }
+  .pub .venue { font-size: 0.93rem; margin: 0; }
+  .pub .links { display: flex; flex-wrap: wrap; gap: 0.2rem 1rem; font-size: 0.88rem; margin-top: 0.4rem; }
+  .pub[hidden] { display: none; }
+
+  footer { margin-top: 4rem; font-size: 0.85rem; color: var(--faint); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 60rem) {
+    .layout { grid-template-columns: 1fr; }
+    .side { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .side-inner { position: static; max-height: none; padding: 2.25rem 1rem 2rem; }
+    .main { padding: 2.25rem 1rem 3rem; row-gap: 3rem; }
+  }
+  @media (max-width: 36rem) {
+    .entry { grid-template-columns: 1fr; gap: 0.2rem; }
+    .matrix-fig { grid-template-columns: 1fr; }
+    .matrix-fig svg { max-width: 16rem; }
+    .portrait { width: 7rem; }
+  }
+
+  /* ---------- Print ---------- */
+  @media print {
+    :root { --bg: #fff; --side: #fff; --ink: #000; --muted: #333; --faint: #555; --rule: #ccc; --accent: #000; }
+    body { font-size: 9.5pt; line-height: 1.45; }
+    .layout { grid-template-columns: 15rem 1fr; }
+    .side { border-right: 1px solid var(--rule); }
+    .side-inner { position: static; max-height: none; padding: 0 1.25rem 0 0; }
+    .main { display: block; padding: 0 0 0 1.5rem; }
+    .main > section + section { margin-top: 1.5rem; }
+    .profile-body { display: block; }
+    .pdf-btn, .filters, .matrix-fig, .domain-note, .lang { display: none; }
+    .tags a { color: var(--muted); }
+    .pub[hidden] { display: grid; }
+    .entry { break-inside: avoid; padding: 0.5rem 0; }
+    footer { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside class="side" aria-label="Informations et contact">
+    <div class="side-inner">
+      <nav class="lang" aria-label="Langue"><a href="../" hreflang="en" lang="en">EN</a><a href="./" hreflang="fr" lang="fr" aria-current="page">FR</a></nav>
+      <img class="portrait" src="../photo.jpg" width="380" height="400" alt="Aboul-Karim Mohamed El Maarouf présentant ses travaux à la conférence HPCSIM 2023 à Padoue">
+      <h1>Aboul-Karim Mohamed El&nbsp;Maarouf</h1>
+      <p class="role">Ingénieur de recherche HPC</p>
+      <p class="org">IFP Energies nouvelles, Île-de-France<br>Docteur en calcul scientifique</p>
+
+      <h2>Contact</h2>
+      <ul class="contact">
+        <li><a id="mail" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1 2.4V17h16V7.4l-8 5.3-8-5.3ZM5.6 7 12 11.2 18.4 7H5.6Z"/></svg><span>E-mail</span></a></li>
+        <li><a href="https://www.linkedin.com/in/aboul-karim-mohamed-el-maarouf-4037ba67/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm2.5 7v7.5H9V10H6.5Zm1.25-4.2a1.45 1.45 0 1 0 0 2.9 1.45 1.45 0 0 0 0-2.9ZM11 10v7.5h2.5v-4c0-1.1.6-1.6 1.4-1.6.8 0 1.2.5 1.2 1.6v4h2.5v-4.6c0-2.3-1.2-3.1-2.8-3.1-1.2 0-1.9.6-2.3 1.2V10H11Z"/></svg>LinkedIn</a></li>
+        <li><a href="https://orcid.org/0000-0001-9464-359X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20ZM8 9.5H6.6V17H8V9.5Zm2.6 0V17h2.9a3.75 3.75 0 0 0 0-7.5h-2.9Zm1.4 1.3h1.4a2.45 2.45 0 0 1 0 4.9H12v-4.9ZM7.3 6.6a.9.9 0 1 0 0 1.8.9.9 0 0 0 0-1.8Z"/></svg>ORCID</a></li>
+        <li><a href="https://github.com/mohameak"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-3 18.5c.5.1.7-.2.7-.5v-1.7c-2.7.6-3.2-1.2-3.2-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.1-.2-4.4-1.1-4.4-4.7 0-1 .4-1.9 1-2.6-.1-.2-.4-1.2.1-2.5 0 0 .8-.3 2.6 1a9 9 0 0 1 4.8 0c1.8-1.3 2.6-1 2.6-1 .5 1.3.2 2.3.1 2.5.6.7 1 1.6 1 2.6 0 3.7-2.3 4.5-4.4 4.7.3.3.7.9.7 1.8v2.7c0 .3.2.6.7.5A9.5 9.5 0 0 0 12 2.5Z"/></svg>GitHub</a></li>
+      </ul>
+
+      <h2>Domaines</h2>
+      <ul class="tags linked">
+        <li><a href="#pub-ppam24" data-d="sparse">Algèbre linéaire creuse</a></li>
+        <li><a href="#pub-ppam24" data-d="krylov">Solveurs de Krylov</a></li>
+        <li><a href="#pub-ppam24" data-d="ilu">Préconditionneurs ILU</a></li>
+        <li><a href="#pub-ppam24" data-d="finegrain">Parallélisme à grain fin</a></li>
+        <li><a href="#pub-ppam24" data-d="simd">SIMD</a></li>
+        <li><a href="#pub-ccpe23" data-d="openmp">OpenMP</a></li>
+        <li><a href="#pub-arcnum25" data-d="mpi">MPI</a></li>
+      </ul>
+
+      <h2>Outils</h2>
+      <ul class="tags">
+        <li>C++</li><li>Python</li><li>Fortran</li><li>Matlab</li><li>Git</li><li>GDB</li><li>Valgrind</li><li>Arm Forge</li><li>LaTeX</li>
+      </ul>
+
+      <h2>Langues</h2>
+      <ul class="side-list">
+        <li><strong>Français</strong></li>
+        <li><strong>Anglais</strong> technique, niveau C1</li>
+      </ul>
+
+      <h2>Engagements</h2>
+      <ul class="side-list">
+        <li>Trésorier de l'ASIP Randonnée et Montagne, association sportive d'IFPEN</li>
+        <li>Photographe à ses heures perdues</li>
+      </ul>
+
+      <button class="pdf-btn" type="button" onclick="window.print()">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v9.6l3.3-3.3 1.4 1.4L12 16.4l-5.7-5.7 1.4-1.4 3.3 3.3V3ZM4 18h16v2H4v-2Z"/></svg>
+        Enregistrer en PDF
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <section class="profile s-profil" aria-labelledby="h-profil">
+      <h2 id="h-profil">Profil</h2>
+      <div class="profile-body">
+      <div class="profile-text">
+      <p>Aboul-Karim Mohamed El Maarouf est ingénieur de recherche en calcul haute performance à IFP Energies nouvelles (IFPEN). Il travaille à accélérer les solveurs linéaires creux au cœur des simulations d'écoulement en milieu poreux, utilisées notamment pour le stockage géologique du CO₂.</p>
+      <p>Pendant sa thèse à l'Université de Bordeaux, menée entre IFPEN et Inria, il a mis au point deux méthodes :</p>
+      <ul>
+        <li>une renumérotation de matrices par coloriage de graphe (ColorRCM), qui permet le parallélisme à grain fin de la résolution des systèmes triangulaires issus de la factorisation incomplète ILU(0), sans dégrader la convergence des solveurs de Krylov ;</li>
+        <li>une barrière de synchronisation combinée à une réduction, jusqu'à quatre fois plus rapide que la réduction OpenMP sur processeurs multicœurs.</li>
+      </ul>
+      <p>Ces deux méthodes sont aujourd'hui intégrées à MCGSolver, la bibliothèque de solveurs d'IFPEN. Il contribue désormais à l'écosystème Alien, un framework pour les bibliothèques de solveurs linéaires codéveloppé par IFPEN et le CEA.</p>
+      </div>
+      <figure class="matrix-fig">
+        <svg id="matrix" viewBox="0 0 256 256" role="img" aria-label="Motif creux d'une matrice 64 par 64, affiché dans l'ordre multicolore"></svg>
+        <figcaption>
+          <p>Matrice d'un stencil à 9 points sur une grille 8×8. Une fois renumérotée par coloriage, chaque bloc diagonal se réduit à sa diagonale : les lignes d'une même couleur se résolvent en parallèle.</p>
+          <button class="matrix-toggle" id="matrix-toggle" type="button" aria-pressed="false">Voir l'ordre naturel</button>
+        </figcaption>
+      </figure>
+      </div>
+    </section>
+
+    <section class="s-exp" aria-labelledby="h-exp">
+      <h2 id="h-exp">Expérience</h2>
+      <ol class="entries">
+        <li class="entry">
+          <div class="when">Depuis 2023</div>
+          <div>
+            <h3>Ingénieur de recherche HPC</h3>
+            <p class="where">IFP Energies nouvelles</p>
+            <ul>
+              <li>Solveurs linéaires et préconditionneurs pour la simulation d'écoulements en milieu poreux, sur architectures x86 et ARM.</li>
+              <li>Contribution à l'écosystème Alien, framework de bibliothèques de solveurs linéaires codéveloppé avec le CEA.</li>
+              <li>Intégration dans MCGSolver des méthodes de renumérotation et de synchronisation issues de la thèse.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="entry">
+          <div class="when">2020 – 2023</div>
+          <div>
+            <h3>Doctorant en calcul scientifique</h3>
+            <p class="where">IFPEN, Rueil-Malmaison, et Inria Bordeaux Sud-Ouest</p>
+            <p>Factorisation incomplète et résolution de systèmes triangulaires pour des machines exploitant un parallélisme à grain fin. Direction : Luc Giraud et Abdou Guermouche (Inria, LaBRI) ; encadrement IFPEN : Thomas Guignon.</p>
+          </div>
+        </li>
+        <li class="entry">
+          <div class="when">2019</div>
+          <div>
+            <h3>Stage de recherche, 6 mois</h3>
+            <p class="where">Total R&amp;D (aujourd'hui TotalEnergies) et Inria Sophia Antipolis, Pau</p>
+            <p>Solveur Galerkin discontinu en domaine temporel pour les équations de Maxwell, parallélisé avec MPI et OpenMP.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="s-pub" aria-labelledby="h-pub">
+      <h2 id="h-pub">Publications</h2>
+      <div class="filters" role="group" aria-label="Filtrer les publications">
+        <button type="button" data-f="all" aria-pressed="true">Toutes<span class="n">7</span></button>
+        <button type="button" data-f="journal" aria-pressed="false">Revues<span class="n">2</span></button>
+        <button type="button" data-f="conf" aria-pressed="false">Conférences<span class="n">3</span></button>
+        <button type="button" data-f="other" aria-pressed="false">Thèse et vulgarisation<span class="n">2</span></button>
+      </div>
+      <p class="domain-note" id="domain-note" hidden aria-live="polite"><span>Publications liées à <strong id="domain-name"></strong></span><button type="button" class="link-btn" id="domain-clear">Tout afficher</button></p>
+      <ol class="entries" id="pubs">
+        <li class="entry pub" id="pub-arcnum25" data-d="mpi" data-k="journal">
+          <div class="when">2025</div>
+          <div>
+            <div class="kind">Revue</div>
+            <h3>ArcNum: an Arcane-based numerical framework used in porous media flow simulation applications</h3>
+            <p class="authors">S. de Chaisemartin, S. Desroziers, G. Enchéry, R. Gayno, J.-M. Gratien, G. Grospellier, T. Guignon, P. Havé, B. Lelandais, A. l'Héritier, A. Michel, <strong>A.-K. Mohamed El Maarouf</strong>, V. Postat, X. Tunc, S. Yousef</p>
+            <p class="venue">Comptes Rendus. Mécanique, vol. 353, p. 1289–1314</p>
+            <div class="links"><a href="https://doi.org/10.5802/crmeca.336">DOI</a><a href="https://comptes-rendus.academie-sciences.fr/mecanique/item/10.5802/crmeca.336.pdf">PDF</a></div>
+          </div>
+        </li>
+        <li class="entry pub" id="pub-ppam24" data-d="sparse krylov ilu finegrain simd" data-k="conf">
+          <div class="when">2024</div>
+          <div>
+            <div class="kind">Conférence internationale</div>
+            <h3>Sparse Matrix Ordering for Fine Grain Parallel Triangular Solve Using SIMD</h3>
+            <p class="authors"><strong>A.-K. Mohamed El Maarouf</strong>, L. Giraud, A. Guermouche, T. Guignon</p>
+            <p class="venue">PPAM 2024, Ostrava. Lecture Notes in Computer Science, vol. 15579, p. 51–64, Springer, 2025</p>
+            <div class="links"><a href="https://doi.org/10.1007/978-3-031-85697-6_4">DOI</a></div>
+          </div>
+        </li>
+        <li class="entry pub" id="pub-eccomas24" data-d="sparse krylov finegrain simd" data-k="conf">
+          <div class="when">2024</div>
+          <div>
+            <div class="kind">Conférence internationale</div>
+            <h3>Efficient high-fidelity simulations for the energy transition using ARM and x86 64 architectures</h3>
+            <p class="authors">A. Anciaux-Sedrakian, R. Gayno, T. Guignon, <strong>A.-K. Mohamed El Maarouf</strong></p>
+            <p class="venue">ECCOMAS 2024, Lisbonne. Minisymposium « Robust and Scalable Solvers in HPC »</p>
+            <div class="links"><a href="https://doi.org/10.23967/eccomas.2024.278">DOI</a><a href="https://www.scipedia.com/public/Anciaux-Sedrakian_et_al_2024a">Scipedia</a></div>
+          </div>
+        </li>
+        <li class="entry pub" id="pub-these23" data-d="sparse krylov ilu finegrain simd openmp" data-k="other">
+          <div class="when">2023</div>
+          <div>
+            <div class="kind">Thèse de doctorat</div>
+            <h3>Factorisation incomplète et résolution de systèmes triangulaires pour des machines exploitant un parallélisme à grain fin</h3>
+            <p class="venue">Université de Bordeaux</p>
+            <div class="links"><a href="https://theses.hal.science/tel-04429547">HAL</a></div>
+          </div>
+        </li>
+        <li class="entry pub" id="pub-ccpe23" data-d="finegrain simd openmp" data-k="journal">
+          <div class="when">2023</div>
+          <div>
+            <div class="kind">Revue</div>
+            <h3>Combining reduction with synchronization barrier on multi-core processors</h3>
+            <p class="authors"><strong>A.-K. Mohamed El Maarouf</strong>, L. Giraud, A. Guermouche, T. Guignon</p>
+            <p class="venue">Concurrency and Computation: Practice and Experience, Wiley</p>
+            <div class="links"><a href="https://doi.org/10.1002/cpe.7402">DOI</a><a href="https://hal.science/hal-03577306">HAL</a><a href="https://www.ifpenergiesnouvelles.com/brief/sc8-synchronizing-cores-rapidly-matter-efficiency">Science@ifpen</a></div>
+          </div>
+        </li>
+        <li class="entry pub" id="pub-compas22" data-d="sparse krylov ilu finegrain" data-k="conf">
+          <div class="when">2022</div>
+          <div>
+            <div class="kind">Conférence nationale</div>
+            <h3>A multi-coloring ordering for preconditioned Krylov solvers</h3>
+            <p class="authors"><strong>A.-K. Mohamed El Maarouf</strong>, L. Giraud, A. Guermouche, T. Guignon</p>
+            <p class="venue">COMPAS 2022, Amiens</p>
+          </div>
+        </li>
+        <li class="entry pub" id="pub-culturemath21" data-d="" data-k="other">
+          <div class="when">2021</div>
+          <div>
+            <div class="kind">Vulgarisation</div>
+            <h3>Les fonctions de hachage</h3>
+            <p class="venue">CultureMath, ENS</p>
+            <div class="links"><a href="https://culturemath.ens.fr/auteurs/aboul-karim-mohamed-el-maarouf">Lire l'article</a></div>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="s-form" aria-labelledby="h-form">
+      <h2 id="h-form">Formation</h2>
+      <ol class="entries">
+        <li class="entry">
+          <div class="when">2020 – 2023</div>
+          <div>
+            <h3>Doctorat en mathématiques appliquées et calcul scientifique</h3>
+            <p class="where">Université de Bordeaux, LaBRI</p>
+          </div>
+        </li>
+        <li class="entry">
+          <div class="when">2017 – 2019</div>
+          <div>
+            <h3>Master de mathématiques appliquées, parcours calcul scientifique</h3>
+            <p class="where">Université de Reims Champagne-Ardenne</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <footer>Mis à jour en octobre 2026.</footer>
+  </main>
+</div>
+
+<script>
+  // E-mail assemblé au chargement pour limiter la collecte automatique.
+  (function () {
+    var user = "karim.medelmaarouf", domain = "gmail.com";
+    var a = document.getElementById("mail");
+    if (a) { a.href = "mailto:" + user + "@" + domain; a.querySelector("span").textContent = user + "@" + domain; }
+  })();
+
+  // Filtres des publications : par type (boutons) ou par domaine (étiquettes de la colonne de gauche).
+  (function () {
+    var buttons = document.querySelectorAll(".filters button");
+    var pubs = document.querySelectorAll("#pubs .pub");
+    var tags = document.querySelectorAll(".tags a[data-d]");
+    var note = document.getElementById("domain-note");
+    var noteName = document.getElementById("domain-name");
+    var clear = document.getElementById("domain-clear");
+    var heading = document.getElementById("h-pub");
+
+    function setType(f) {
+      buttons.forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-f") === f ? "true" : "false"); });
+    }
+    function show(test) { pubs.forEach(function (p) { p.hidden = !test(p); }); }
+    function clearDomain() {
+      note.hidden = true;
+      tags.forEach(function (t) { t.removeAttribute("aria-current"); });
+    }
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var f = btn.getAttribute("data-f");
+        clearDomain();
+        setType(f);
+        show(function (p) { return f === "all" || p.getAttribute("data-k") === f; });
+      });
+    });
+
+    tags.forEach(function (tag) {
+      tag.addEventListener("click", function (e) {
+        e.preventDefault();
+        var d = tag.getAttribute("data-d");
+        setType("all");
+        show(function (p) { return (" " + p.getAttribute("data-d") + " ").indexOf(" " + d + " ") !== -1; });
+        tags.forEach(function (t) { if (t === tag) t.setAttribute("aria-current", "true"); else t.removeAttribute("aria-current"); });
+        noteName.textContent = "« " + tag.textContent + " »";
+        note.hidden = false;
+        heading.scrollIntoView({ block: "start" });
+      });
+    });
+
+    clear.addEventListener("click", function () {
+      clearDomain();
+      setType("all");
+      show(function () { return true; });
+    });
+  })();
+
+  // Motif creux : stencil 9 points sur une grille 8x8, ordre naturel ou multicolore (4 couleurs).
+  (function () {
+    var svg = document.getElementById("matrix");
+    var btn = document.getElementById("matrix-toggle");
+    if (!svg || !btn) return;
+    var NS = "http://www.w3.org/2000/svg";
+    var G = 8, N = G * G, cell = 256 / N;
+    var colorVars = ["--c1", "--c2", "--c3", "--c4"];
+    function colorOf(k) { var x = k % G, y = Math.floor(k / G); return (y % 2) * 2 + (x % 2); }
+
+    var perm = new Array(N), pos = 0;
+    for (var c = 0; c < 4; c++) for (var k = 0; k < N; k++) if (colorOf(k) === c) perm[k] = pos++;
+
+    var guides = document.createElementNS(NS, "g");
+    guides.setAttribute("stroke", "var(--grid)");
+    guides.setAttribute("stroke-width", "1");
+    for (var b = 1; b < 4; b++) {
+      var t = b * 16 * cell;
+      var h = document.createElementNS(NS, "line");
+      h.setAttribute("x1", 0); h.setAttribute("x2", 256); h.setAttribute("y1", t); h.setAttribute("y2", t);
+      var v = document.createElementNS(NS, "line");
+      v.setAttribute("y1", 0); v.setAttribute("y2", 256); v.setAttribute("x1", t); v.setAttribute("x2", t);
+      guides.appendChild(h); guides.appendChild(v);
+    }
+    guides.style.transition = "opacity 600ms";
+    svg.appendChild(guides);
+
+    var rects = [];
+    for (var i = 0; i < N; i++) {
+      var xi = i % G, yi = Math.floor(i / G);
+      for (var dy = -1; dy <= 1; dy++) for (var dx = -1; dx <= 1; dx++) {
+        var xj = xi + dx, yj = yi + dy;
+        if (xj < 0 || yj < 0 || xj >= G || yj >= G) continue;
+        var j = yj * G + xj;
+        var r = document.createElementNS(NS, "rect");
+        r.setAttribute("class", "nz");
+        r.setAttribute("width", cell * 0.82);
+        r.setAttribute("height", cell * 0.82);
+        r.setAttribute("rx", 0.6);
+        r.style.fill = i === j ? "var(--ink)" : "var(" + colorVars[colorOf(i)] + ")";
+        svg.appendChild(r);
+        rects.push({ el: r, i: i, j: j });
+      }
+    }
+
+    var reordered = true;
+    function place() {
+      rects.forEach(function (o) {
+        var row = reordered ? perm[o.i] : o.i, col = reordered ? perm[o.j] : o.j;
+        o.el.style.transform = "translate(" + (col * cell + cell * 0.09) + "px," + (row * cell + cell * 0.09) + "px)";
+      });
+      guides.style.opacity = reordered ? 1 : 0;
+      btn.textContent = reordered ? "Voir l'ordre naturel" : "Voir l'ordre après coloriage";
+      btn.setAttribute("aria-pressed", reordered ? "false" : "true");
+      svg.setAttribute("aria-label", "Motif creux d'une matrice 64 par 64, affiché dans l'ordre " + (reordered ? "après coloriage" : "naturel"));
+    }
+    place();
+    btn.addEventListener("click", function () { reordered = !reordered; place(); });
+  })();
+</script>
+</body>
+</html>
